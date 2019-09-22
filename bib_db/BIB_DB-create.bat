@@ -1,3 +1,4 @@
+md msg
 sqlcmd -S SATURN\SQL2017 -v dbName ="BIB_DB" -i sql\BIB_DB-create.sql -o .\msg\BIB_DB-create.txt
 sqlcmd -S SATURN\SQL2017 -v dbName ="BIB_DB" -i sql\1_Person.sql -o .\msg\1_Person.txt
 sqlcmd -S SATURN\SQL2017 -v dbName ="BIB_DB" -i sql\2_Conference.sql -o .\msg\2_Conference.txt
