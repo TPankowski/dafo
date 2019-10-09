@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <meta charset="utf-8" />
+      <title>DAFO - First Order form of faceted queries</title>
+      <link rel="stylesheet" href="../css/main.css"/>
+      <style>
+         #box-results > div
+         {
+            margin-bottom: 1em;
+         }
+
+         #jquery-statement,
+         #resulting-elements-count
+         {
+            font-weight: bold;
+         }
+
+         .found-element
+         {
+            border: 2px solid #000000;
+            background-color: #DDDDDD;
+         }
+
+         #sample-dom-source
+         {
+            max-height: 40em;
+         }
+
+         .edge-button {
+            display:flex;
+            justify-content:flex-end;
+            align-items:center; 
+            font-size: 12px;
+            border-radius: 50%;
+         } 
+         .tree-button {
+            align-items:center; 
+            font-size: 14px;
+            border-radius: 12px;
+         } 
+         .accept-button {
+            display:flex;
+            justify-content:center;
+            align-items:center; 
+            font-size: 14px;
+            border-radius: 12px;
+            color:blue;
+            font-weight: bold;
+         } 
+         .root {
+            width:110px; 
+            font-weight: normal;
+         } 
+         .node {
+            width:120px; 
+            font-weight: normal;
+         }
+         .countk {
+            width:20px; 
+            font-weight: normal;
+         } 
+         div.countkDiv{
+            position: relative;
+            width:60px;
+            left: 400px;
+            border: 3px solid #73AD21;
+         }
+         .lastName {
+            color:blue; 
+            font-weight: bold;
+         } 
+
+         .sql {
+            font-size: 14px;
+            line-height: 1.2;
+         } 
+         h4 {
+            /*background-color: rgb(0, 217, 255);*/
+            background-color: rgb(255, 208, 0);
+            /*width: 200px;*/
+         }
+
+   	   
+      </style>
+        <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css'>
+      <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js'></script>
+      <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js'></script>
+      <script src='./../dist/jstree.min.js'></script>
+      <!--
+      <link rel='stylesheet' href='./../dist/themes/default/style.min.css' />
+      -->
+      <link rel='stylesheet' href='./../dist/themes/default/style.css' />
+      <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css' />
+      <style>
+      .red_class > .jstree-anchor {
+        display: inline-block;
+        color: red;
+        white-space: nowrap;
+        padding: 0 4px 0 1px;
+        margin: 0;
+        vertical-align: top;
+      }
+      .up > .jstree-anchor {
+        font-weight: bold;
+      }
+      .or > .jstree-anchor {
+        display: inline-block;
+        color: blue;
+        white-space: nowrap;
+        padding: 0 4px 0 1px;
+        margin: 0;
+        vertical-align: top;
+        font-weight: bold;
+      }
+      .no > .jstree-anchor {
+        color: green;
+        font-weight: bold;
+      }
+      .val > .jstree-anchor {
+        color: gray;
+      }
+         </style>
+   </head>
+<!-- Poczatek BODY -->
+<body>
+    
+  <h1 class="header">DAFO - creating and executing faceted queries</h1>
+  
+   <div class="box-small">
+      <h4>FO before rewriting:</h4>
+      <div id='treeViewBefore' class='treeview'></div>
+   </div>
+
+   <div class="box-small">
+      <h4>FO after rewriting:</h4>
+      <div id='treeViewAfter' class='treeview'></div>
+   </div>
+
+   <div>
+      <h4>SQL:</h4>
+      <div id='sqlQuery' class='text'></div>
+   </div>
+   
+   <div class="footer">
+      <p>T. Pankowski, DAFO</p>
+   </div>
+   <script src='fo_view.js'></script>
+   <script src='server_url.js'></script>
+   <script> // obsluga ladowania strony  
+     
+      $(document).ready(function(){
+        //serverURL='https://localhost:44391/api/treeview'; // i w innych .HTML
+        serverURL='https://localhost:5001/api/treeview';
+        token = location.search.split('param1=')[1]
+        console.log("rewriting:",token);
+        xhttp = new XMLHttpRequest();
+         xhttp.onreadystatechange = function() {
+                  response = xhttp.responseText;
+            console.log(response);
+         };
+         //xhttp.open('GET', 'https://localhost:44391/api/treeview?type=before&&property='+token, false);
+         xhttp.open('GET', serverURL+'?type=before&&property='+token, false);
+         odp=xhttp.send();
+         treeStr=response.replace(/'/g,'"');
+         console.log("rewriting:",treeStr);
+         jsonbefore =JSON.parse(treeStr);
+
+         //xhttp.open('GET', 'https://localhost:44391/api/treeview?type=after&&property='+token, false);
+         xhttp.open('GET', serverURL+'?type=after&&property='+token, false);
+         odp=xhttp.send();
+         treeStr=response.replace(/'/g,'"');
+         console.log("rewriting:",treeStr);
+         jsonafter =JSON.parse(treeStr);
+         
+         //xhttp.open('GET', 'https://localhost:44391/api/treeview?type=sqlquery&&property='+token, false);
+         xhttp.open('GET', serverURL+'?type=sqlquery&&property='+token, false);
+         odp=xhttp.send();
+         sqlQuery=response;
+         console.log("rewriting:",sqlQuery);
+
+         //$('#button-rewriting').trigger("click");
+         displayFoSQL();     
+      })
+      ;
+      </script>
+      
+  </body>
+</html>

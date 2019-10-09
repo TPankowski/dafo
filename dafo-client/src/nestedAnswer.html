@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <meta charset="utf-8" />
+      <title>DAFO - First Order form of faceted queries</title>
+      <link rel="stylesheet" href="../css/main.css"/>
+      <style>
+         #box-results > div
+         {
+            margin-bottom: 1em;
+         }
+
+         #jquery-statement,
+         #resulting-elements-count
+         {
+            font-weight: bold;
+         }
+
+         .found-element
+         {
+            border: 2px solid #000000;
+            background-color: #DDDDDD;
+         }
+
+         #sample-dom-source
+         {
+            max-height: 40em;
+         }
+
+         .edge-button {
+            display:flex;
+            justify-content:flex-end;
+            align-items:center; 
+            font-size: 12px;
+            border-radius: 50%;
+         } 
+         .tree-button {
+            align-items:center; 
+            font-size: 14px;
+            border-radius: 12px;
+         } 
+         .accept-button {
+            display:flex;
+            justify-content:center;
+            align-items:center; 
+            font-size: 14px;
+            border-radius: 12px;
+            color:blue;
+            font-weight: bold;
+         } 
+         .root {
+            width:110px; 
+            font-weight: normal;
+         } 
+         .node {
+            width:120px; 
+            font-weight: normal;
+         }
+         .countk {
+            width:20px; 
+            font-weight: normal;
+         } 
+         div.countkDiv{
+            position: relative;
+            width:60px;
+            left: 400px;
+            border: 3px solid #73AD21;
+         }
+         .lastName {
+            color:blue; 
+            font-weight: bold;
+         } 
+
+         .sql {
+            font-size: 14px;
+            line-height: 1.2;
+         } 
+         h4 {
+            /*background-color: rgb(0, 217, 255);*/
+            background-color: rgb(255, 208, 0);
+            /*width: 200px;*/
+         }
+
+   	   
+      </style>
+        <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css'>
+      <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js'></script>
+      <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js'></script>
+      <script src='./../dist/jstree.min.js'></script>
+      <!--
+      <link rel='stylesheet' href='./../dist/themes/default/style.min.css' />
+      -->
+      <link rel='stylesheet' href='./../dist/themes/default/style.css' />
+      <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css' />
+      <style>
+      .red_class > .jstree-anchor {
+        display: inline-block;
+        color: red;
+        white-space: nowrap;
+        padding: 0 4px 0 1px;
+        margin: 0;
+        vertical-align: top;
+      }
+      .up > .jstree-anchor {
+        font-weight: bold;
+      }
+      .or > .jstree-anchor {
+        display: inline-block;
+        color: blue;
+        white-space: nowrap;
+        padding: 0 4px 0 1px;
+        margin: 0;
+        vertical-align: top;
+        font-weight: bold;
+      }
+      .no > .jstree-anchor {
+        color: green;
+        font-weight: bold;
+      }
+      .val > .jstree-anchor {
+        color: gray;
+      }
+         </style>
+   </head>
+<!-- Poczatek BODY -->
+<body>
+    
+  <h1 class="header">DAFO - creating and executing faceted queries</h1>
+  
+   <div>
+      <h4>Nested answers (expand/collapse items):</h4>
+      <div id='treeViewNested' class='treeview'></div>
+   </div>
+   <div class="footer">
+      <p>T. Pankowski, DAFO</p>
+   </div>
+   <script src='server_url.js'></script>
+   <script src='nestedAnswer.js'></script>
+   <script>
+      //serverURL='https://localhost:44391/api/treeview'; // i w innych .HTML
+      serverURL='https://localhost:5001/api/treeview';
+      $(document).ready(function(){
+        token = location.search.split('param1=')[1]
+        console.log("nestedAnswer:",token);
+        xhttp = new XMLHttpRequest();
+         xhttp.onreadystatechange = function() {
+                  response = xhttp.responseText;
+            //console.log(response);
+         };
+         //xhttp.open('GET', 'https://localhost:44391/api/treeview?type=nested&&property='+token, false);
+         xhttp.open('GET', serverURL+'?type=nested&&property='+token, false);
+         odp=xhttp.send();
+         treeStr=response.replace(/'/g,'"');
+         //console.log("nested:",treeStr);
+         //treeStr='[{"id":"0","text":"Tadeusz xxxx; PUT, Poland","parent":"#","attr":"54"},{"id":"1","text":"Tadeusz Pankowski; PUT, Poland","parent":"#","attr":"1"},{"id":"2","text":"Robert Wrembel; PUT, Poland","parent":"#","attr":"72"},{"id":"3","text":"DEXA, 2015, 26. DEXA 2015: Valencia, Spain, Database and Expert Systems Applications (DEXA), 26  , Spain, Valencia","parent":"0","attr":"1407"},{"id":"4","text":"DEXA Workshop, 2001, 12. DEXA Workshop 2001: Munich, Germany, DEXA Workshops, 12  , Germany, Munich","parent":"0","attr":"780"},{"id":"5","text":"DEXA Workshop, 1999, 10. DEXA Workshop 1999: Florence, Italy, DEXA Workshops, 10  , Italy, Florence","parent":"0","attr":"1426"},{"id":"6","text":"DEXA, 1991, 2. DEXA 1991: Berlin, Germany, Database and Expert Systems Applications (DEXA), 2   , Germany, Berlin","parent":"0","attr":"937"},{"id":"7","text":"DEXA, 1990, 1. DEXA 1990: Vienna, Austria, Database and Expert Systems Applications (DEXA), 1   , Austria, Vienna","parent":"0","attr":"1429"},{"id":"8","text":"DEXA, 2016, 27. DEXA 2016: Porto, Portugal - Part II, Database and Expert Systems Applications (DEXA), 27  , Portugal, Porto","parent":"1","attr":"1"},{"id":"9","text":"DEXA Workshops, 2007, 18. DEXA Workshops 2007: Regensburg, Germany, DEXA Workshops, 18  , Germany, Regensburg","parent":"1","attr":"21"},{"id":"10","text":"DEXA Workshops, 2006, 17. DEXA Workshops 2006: Krakow, Poland, DEXA Workshops, 17  , Poland, Krakow","parent":"1","attr":"26"},{"id":"11","text":"DEXA, 2015, 26. DEXA 2015: Valencia, Spain, Database and Expert Systems Applications (DEXA), 26  , Spain, Valencia","parent":"2","attr":"1407"},{"id":"12","text":"DEXA, 2012, 23. DEXA 2012: Vienna, Austria, Database and Expert Systems Applications (DEXA), 23  , Austria, Vienna","parent":"2","attr":"1847"},{"id":"13","text":"DEXA, 2010, 21. DEXA 2010: Bilbao, Spain, Database and Expert Systems Applications (DEXA), 21  , Spain, Bilbao","parent":"2","attr":"1849"},{"id":"14","text":"DEXA, 2006, 17. DEXA 2006: Krakow, Poland, Database and Expert Systems Applications (DEXA), 17  , Poland, Krakow","parent":"2","attr":"1852"},{"id":"15","text":"DEXA Workshop, 2001, 12. DEXA Workshop 2001: Munich, Germany, DEXA Workshops, 12  , Germany, Munich","parent":"2","attr":"780"}]'
+         jsonnested =JSON.parse(treeStr); 
+         displayNestedAnswer();
+      });
+      </script>
+      
+  </body>
+</html>

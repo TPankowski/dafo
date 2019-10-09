@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <meta charset="utf-8" />
+      <title>DAFO - creating and executing faceted queries</title>
+      <link rel="stylesheet" href="../css/main.css"/>
+      <style>
+         #box-results > div
+         {
+            margin-bottom: 1em;
+         }
+
+         #jquery-statement,
+         #resulting-elements-count
+         {
+            font-weight: bold;
+         }
+
+         .found-element
+         {
+            border: 2px solid #000000;
+            background-color: #DDDDDD;
+         }
+
+         #sample-dom-source
+         {
+            max-height: 40em;
+         }
+
+         .edge-button {
+            display:flex;
+            justify-content:flex-end;
+            align-items:center; 
+            font-size: 12px;
+            border-radius: 50%;
+         } 
+         .tree-button {
+            align-items:center; 
+            font-size: 14px;
+            border-radius: 12px;
+         } 
+         .accept-button {
+            display:flex;
+            justify-content:center;
+            align-items:center; 
+            font-size: 12px;
+            border-radius: 12px;
+            color:blue;
+            font-weight: bold;
+            height: 80%;
+         } 
+         .root {
+            width:110px; 
+            font-weight: normal;
+         } 
+         .node {
+            width:120px; 
+            font-weight: normal;
+         }
+         .countk {
+            width:20px; 
+            font-weight: normal;
+         } 
+         div.countkDiv{
+            position: relative;
+            width:60px;
+            left: 400px;
+            border: 3px solid #73AD21;
+         }
+         .lastName {
+            color:blue; 
+            font-weight: bold;
+         } 
+         h3{
+            background-color: rgb(255, 208, 0);
+         }
+
+   	   
+      </style>
+        <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css'>
+      <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js'></script>
+      <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js'></script>
+      <script src='./../dist/jstree.min.js'></script>
+      <!--
+      <link rel='stylesheet' href='./../dist/themes/default/style.min.css' />
+      -->
+      <link rel='stylesheet' href='./../dist/themes/default/style.css' />
+      <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css' />
+      <style>
+      .red_class > .jstree-anchor {
+        display: inline-block;
+        color: red;
+        white-space: nowrap;
+        padding: 0 4px 0 1px;
+        margin: 0;
+        vertical-align: top;
+      }
+      .and > .jstree-anchor {
+        font-weight: bold;
+      }
+      .andexpl > .jstree-anchor {
+         color: rgb(114, 79, 79);
+         /*
+         font-size: 14px;
+         line-height: 1;*/
+      }
+      .or > .jstree-anchor {
+        display: inline-block;
+        color: blue;
+        white-space: nowrap;
+        padding: 0 4px 0 1px;
+        margin: 0;
+        vertical-align: top;
+        font-weight: bold;
+      }
+      .no > .jstree-anchor {
+        color: blue;
+      }
+      .noand > .jstree-anchor {
+        font-weight: bold;
+      }
+      .val > .jstree-anchor {
+        color: gray;
+      }
+
+.topnav {
+  overflow: hidden;
+  background-color: #333;
+}
+
+.topnav a {
+  float: left;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.topnav a.active {
+  background-color: rgb(255, 208, 0);
+  color: black;
+}
+
+         </style>
+   </head>
+<!-- Poczatek BODY -->
+<body>
+ <div class="topnav">
+  <a class="active" href="#home">DAFO</a>
+  <a href="dafo-home.html">Home</a>
+  <a href="dafo-fi.html">Queries</a>
+  <a href="dafo-examples.html">Examples</a>
+  <a href="#about">About</a>
+</div>
+  <h1 class="header">DAFO - creating and executing faceted queries</h1>
+  <div class="box-small">
+       <form id="box-selector"> 
+         <h3>Query template (preselection of elements)</h3>
+         <div class="tree" id="tree">
+            <div id="tree">
+               <h5>(Sub)trees constituting the query:</h5>
+               <label for="root1">Roots of subtrees:
+                  <select class="root" id="root1">
+                  </select>
+               </label>
+                  <select class="root" id="root2">
+                        <option value="default" selected>------------</option>
+                     </select>
+                  <select class="root" id="root3">
+                        <option value="default" selected>------------</option>
+                     </select>
+            </div>
+            <div>
+               <h5>Edges of (sub)trees:</h5>
+               <div class="edges" id="edges">
+                  <div class="edge" id="edge1">
+                     <label> Edge1:
+                     <select class="node" id="dom1"> </select>
+                     </label>
+                     &rarr;
+                     <select class="node" id="rng1"> </select>
+                  </div>
+                  <div class="edge" id="edge2">
+                        <label> Edge2:
+                        <select class="node" id="dom2"> </select>
+                     </label>
+                        &rarr;
+                        <select class="node" id="rng2"> </select>
+                  </div>
+                  <div class="edge" id="edge3">
+                        <label> Edge3:
+                        <select class="node" id="dom3"> </select>
+                     </label>
+                        &rarr;
+                        <select class="node" id="rng3"> </select>
+                  </div>
+                  <div class="edge" id="edge4">
+                        <label> Edge4:
+                        <select class="node" id="dom4"> </select>
+                     </label>
+                        &rarr;
+                        <select class="node" id="rng4"> </select>
+                  </div>
+                  <div class="edge" id="edge5">
+                        <label> Edge5:
+                        <select class="node" id="dom5"> </select>
+                     </label>
+                        &rarr;
+                        <select class="node" id="rng5"> </select>
+                  </div>
+               </div>
+            </div>
+         </div> 
+         <br/>
+         <div class="accept-button">        
+            <input class="accept-button" type="button" id="button-kq-accept" value="ACCEPT"/>
+            <!--
+            <p>&nbsp;&nbsp;&nbsp;</p>
+            <input class="accept-button" type="button" id="button-kq-new" value="New query"/>
+            -->
+         </div>
+         <div><br/></div>
+   </div>
+<!-- koniec panelu Keyword query-->
+
+   <div class="box-small">
+      <h3>Faceted interface:</h3>
+      <div id='treeView' class='treeview'></div>
+      <br/>
+      <!-- input type="submit" id="button-execute" value="Execute" /-->
+      <div class="accept-button">        
+            <input class="accept-button" type="button" id="button-execute" value="EXECUTE"/>
+            <p>&nbsp;&nbsp;&nbsp;</p>
+            <input class="accept-button" type="button" id="button-fo-sql" value="FO & SQL FORMS"/>
+         </div>
+         <br/>
+         <div class="accept-button">        
+            <input class="accept-button" type="button" id="nested-answer" value="NESTED ANSWER"/>
+         </div>
+   </div>
+
+<!-- koniec panelu Faceted interface-->
+   <div>
+     <h3>Answers</h3>
+     <ol id="answers">
+         <pre id="answerspre"></pre>
+     </ol>
+   </div>
+   <div class="footer">
+      <p>T. Pankowski, DAFO</p>
+   </div>
+<!-- koniec panelu Answer--> 
+   
+<!-- Obsloga Accept z Keyword query -->
+   <!--
+      <script src='kq-reduction.js'></script>
+   -->
+   <script>
+         $('#root3').hide();
+         $('#root2').hide();
+         $('#edge5').hide();
+         $('#edge4').hide();
+         $('#edge3').hide();
+         $('#edge2').hide();
+      </script>
+      <script src='kq-full.js'></script>
+      <script src='menu.js'></script>
+      <script src='treeview.js'></script>
+      <script src='server_url.js'></script>
+      <script> // obsluga ladowania strony
+            treecreated = false;
+            classList = ''; classMaxList = ''; response = '';
+            selMax1 = ''; selMax2 ='';
+            keywordquery='';
+            sel1 = ''; sel2 = ''; sel3 = '';
+            edgeNum1 = 2; edgeNum2 = 1; edgeNum3 = 1; edgeNum4 = 1;
+            treeNum = 2;
+            valuePar1="query";
+            valuePar2="";
+            valuePar3="";
+            //serverURL='https://localhost:44391/api/treeview'; // i w innych .HTML
+            serverURL='https://localhost:5001/api/treeview';
+            $(document).ready(function(){
+               xhttp = new XMLHttpRequest();
+               xhttp.onreadystatechange = function() {
+               if (this.readyState == 4 && this.status == 200) {
+                  response = xhttp.responseText;
+                  }
+               };
+               //xhttp.open('GET', 'https://localhost:44391/api/treeview?type=classes', false);// zablokowana asynchronicznosc, false
+               xhttp.open('GET', serverURL+'?type=classes', false);
+               odp=xhttp.send();
+               var classDescList = response.split(';');
+               classList=classDescList[0].split(',');
+               classMaxList=classDescList[1].split(',');
+               createDropDown1();
+            });
+      </script>
+      <script src='createanswer.js'></script>
+  </body>
+</html>
