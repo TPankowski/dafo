@@ -1,0 +1,1 @@
+﻿{"ContextClassName":"DAFO_ONTOContext","DefaultDacpacSchema":null,"IdReplace":false,"IncludeConnectionString":false,"OutputPath":null,"ProjectRootNamespace":"DafoApi","SelectedToBeGenerated":0,"Tables":[{"HasPrimaryKey":true,"Name":"dbo.mv_MaxSuperClasses"}],"UseDatabaseNames":false,"UseFluentApiOnly":true,"UseHandleBars":false,"UseInflector":false}
