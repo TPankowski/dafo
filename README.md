@@ -1,5 +1,5 @@
 # DAFO
-DAFO: Data Access based on Faceted queries over Ontology
+## DAFO: Data Access based on Faceted queries over Ontology
 
 ## Installing/Creating databases
 The are two databases managed by MS SQL Server
