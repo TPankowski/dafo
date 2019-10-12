@@ -1,5 +1,25 @@
-# DAFO
-## DAFO: Data Access based on Faceted queries over Ontology
+# DAFO: Data Access based on Faceted queries over Ontology
+
+**DAFO** is an OBDA (Ontology Based Data Access) system with an interactive graphical faceted interface. Faceted queries formulated in DAFO are equivalent to concept expressions in description logic. Queries are formulated against an OWL 2 QL ontology.
+
+DAFO system is available with an example of bibliogpaphic relationa database (BIB_DB), an bibliographic ontology (BIB_ONTO), and a mapping from the ontology into the database (encoded within BIB_ONTO).
+
+
+#### Software and descriptions ####
+
+* **bib_db** – scripts in Transact-SQL creating BIB_DB databases in MS SQL Server
+
+* **bib_onto** – scripts in Transact-SQL creating BIB_ONTO databases in MS SQL Server
+
+* **dafo-client** - scripts constituting the client-side software of, written in: HTML, JavaScript + jQuery
+
+* **dafo-server** - files constituting the server-side software of DAFO, written in .NET Core 2.2
+
+* **dafo-examples.html.pdf** - the .pdf version of an HTML script illustrating interaction with the DAFO system. The HTML version of this file is a component of **dafo-client**
+
+* **dafo-presentation** - .pdf version of slides presenting the underlying theory of ontological database systems, as well as the implementation of DAFO
+
+---------------------------------------------------------------------------------------------------------------------------------
 
 ## Installing/Creating databases
 The are two databases managed by MS SQL Server
