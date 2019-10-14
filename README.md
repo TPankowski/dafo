@@ -107,6 +107,17 @@ GET https://localhost:5001/api/treeview?type=classes
 
 in Postman (https://www.getpostman.com/).
 
+------------------------------------------------------
+
+## Installing DAFO client
+
+Download the folder **dafo-client** into arbitrary folder in your computer, say C:\dafo-client. Next, in three HTML files: **dafo-api.html**, **nestedAnswer.html**, **rewriting.html** and in **server_url.js**, set the aproppriet port number (i.e., replace 5001 with the number returned by the **dotnet** command): 
+
+```bush
+serverURL='https://localhost:5001/api/treeview';
+```
+
+Open **dafo-api.html** by your web browser (tested by Chrom).
 
 ------------------------------------------------------------
 
