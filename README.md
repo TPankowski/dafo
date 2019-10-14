@@ -60,6 +60,54 @@ Now, we execute **BIB_ONTO-create.bat**.
 In result, the database, e.g., BIB_ONTO, in MS SQL Server instance, e.g. SATURN\SQL2017, will be created. The database stores both relational tables representing the ontological schema and the mapping of the ontology into the database BIB_DB.
 In **msg** subfolder are  messages about execution of Transact-SQL scripts.
 
+------------------------------------------------------
+
+## Installing DAFO server
+
+DAFO-SERVER is written in NET Core 2.2 using Visual Studio 2019. Now available is the binary version wich operates on data and ontology databases. The binary version is the resul of **Publish** from Visual Studio 2019. Connection strings to BIB_DB and BIB_ONTO are contained in the configuration file: **appsettings.json**, and are of the form (you have to change it accordingly):
+
+```bash
+  "ConnectionStrings": {
+    "DAFO_ONTOContext": "Server=SATURN\\SQL2017;Database=BIB_ONTO;Trusted_Connection=True;",
+	"DAFO_DBContext"  : "Server=SATURN\\SQL2017;Database=BIB_DB;Trusted_Connection=True;"
+  },
+```
+The files can be downloaded into arbitrary folder, say C:\dafo-server. The file **run.bat** contains the command running the server (from the operating system shell):
+
+```bash
+C:\dafo-server> dotnet dafoapi.dll
+```
+
+After successful initiation, the following messages are displayed: 
+
+```bush
+Hosting environment: Production
+Content root path: C:\dafo-server
+Now listening on: http://localhost:5000
+Now listening on: https://localhost:5001
+Application started. Press Ctrl+C to shut down.
+```
+
+To test connections, you can write the following URL address in your web browser (tested in Chrom):
+
+```brush
+https://localhost:5001/api/treeview?type=classes
+```
+
+In response, a set of informations concerning classes in DAFO are displayed:
+
+```brush
+Conference,ACMConf,DEXAConf,KESConf,TPDLConf,USAConf,Integer,Paper,ACMPaper, ....
+```
+
+or use the command
+```brush
+GET https://localhost:5001/api/treeview?type=classes
+```
+
+in Postman (https://www.getpostman.com/).
+
+
 ------------------------------------------------------------
 
 ## License
