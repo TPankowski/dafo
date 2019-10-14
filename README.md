@@ -78,7 +78,7 @@ The files can be downloaded into arbitrary folder, say C:\dafo-server. The file 
 C:\dafo-server> dotnet dafoapi.dll
 ```
 
-After successful initiation, the following messages are displayed: 
+After successful initiation, the following messages are displayed  (possibly with different port number):  
 
 ```bush
 Hosting environment: Production
