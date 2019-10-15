@@ -19,6 +19,8 @@ DAFO system is available with an example of bibliogpaphic relationa database (BI
 
 * **dafo-presentation** - .pdf version of slides presenting the underlying theory of ontological database systems, as well as the implementation of DAFO
 
+* **dafo-server-src.zip** - zipped version of the source version of **dafo-server**, written in C#, NET Core 2.2, in Visual Studio 2019
+
 ---------------------------------------------------------------------------------------------------------------------------------
 
 ## Installing/Creating databases
