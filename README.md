@@ -101,17 +101,15 @@ In response, a set of informations concerning classes in DAFO are displayed:
 ```brush
 Conference,ACMConf,DEXAConf,KESConf,TPDLConf,USAConf,Integer,Paper,ACMPaper, ....
 ```
-
-or use the command
+In the case of a problem with the connection, use the command
 ```brush
 GET https://localhost:5001/api/treeview?type=classes
 ```
-
 or 
 ```brush
 GET http://localhost:5000/api/treeview?type=classes
 ```
-or in Postman (https://www.getpostman.com/).
+or try to test connection with Postman (https://www.getpostman.com/).
 
 ------------------------------------------------------
 
