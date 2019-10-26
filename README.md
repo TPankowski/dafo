@@ -107,7 +107,11 @@ or use the command
 GET https://localhost:5001/api/treeview?type=classes
 ```
 
-in Postman (https://www.getpostman.com/).
+or 
+```brush
+GET http://localhost:5000/api/treeview?type=classes
+```
+or in Postman (https://www.getpostman.com/).
 
 ------------------------------------------------------
 
